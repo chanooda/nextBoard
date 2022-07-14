@@ -1,0 +1,59 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Board {
+  id   Int    @id @default(autoincrement())
+  name String
+  post Post[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  password  String?
+  guest     Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int?
+  Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int
+
+  @@index([userId, postId])
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   String
+  view      Int       @default(1)
+  password  String?
+  guest     Boolean
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  User      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int?
+  Board     Board     @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  boardId   Int
+  comments  Comment[]
+
+  @@index([userId, boardId])
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  username String    @unique
+  userId   String    @unique
+  password String
+  admin    Boolean   @default(false)
+  posts    Post[]
+  comments Comment[]
+}
