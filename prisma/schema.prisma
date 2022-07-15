@@ -10,9 +10,9 @@ datasource db {
 }
 
 model Board {
-  id   Int    @id @default(autoincrement())
-  name String
-  post Post[]
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[]
 }
 
 model Comment {

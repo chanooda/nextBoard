@@ -23,7 +23,7 @@ async function checkDuplicateUser(req: NextApiRequest, res: NextApiResponse) {
   // userId가 이미 존재하는지 검사
   const userId = await prisma.user.findUnique({
     where: {
-      username: body.userId,
+      userId: body.userId,
     },
   });
 
