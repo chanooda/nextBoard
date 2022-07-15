@@ -12,14 +12,33 @@ export interface IPost {
 }
 
 export interface IBoard {
-  id: number;
+  id: string;
   name: string;
   posts: IPost[];
 }
-
 export interface IHomeProps {
   boards: IBoard[];
 }
 export interface IBoardProps {
   board: IBoard;
+  write: boolean;
+  onClick?: () => void;
+}
+
+export interface IPost {
+  id: string;
+  title: string;
+  content: string;
+  view: string;
+  password: string;
+  guest: boolean;
+  createdAt: string;
+  updatedAt: string;
+  userId?: string;
+  boardId: number;
+  comments: array;
+}
+
+export interface IPostProps {
+  post: IPost;
 }

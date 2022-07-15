@@ -2,15 +2,12 @@ export interface IBoardForm {
   boardName: string;
 }
 
-export interface ISendDataState {
-  error?: IError;
-  data?: object;
-  loading: boolean;
+export interface IPostForm {
+  title: string;
+  content: string;
+  password?: string;
 }
 
-export type UseMutationResult = [(data: any) => void, ISendDataState];
-
-export interface IError {
-  message: string;
-  success: boolean;
+export interface IPostFormProps {
+  boardId: string;
 }

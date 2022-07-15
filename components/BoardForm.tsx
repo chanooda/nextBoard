@@ -35,6 +35,7 @@ function BoardForm() {
           {error ? <ErrorMessage text={error.message} /> : null}
           <input
             {...register("boardName", {
+              required: "제목을 입력해주세요.",
               maxLength: { value: 15, message: "최대 15글자 입니다." },
             })}
             type="text"

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 // Interface
-import { IBoardProps } from "../interfaces/HomeInterface";
-import { NextArrowButton } from "./Parts";
+import { IBoardProps } from "../interfaces/PageInterface";
+import { NextArrowButton, WritePostButton } from "./Parts";
 //Components
 
 // tailwind Styled Components
@@ -19,24 +19,33 @@ export function BoardList({ children }: PropsWithChildren) {
   return <BoardListContainer>{children}</BoardListContainer>;
 }
 
-export function Board({ board }: IBoardProps) {
+export function Board({ board, write, onClick }: IBoardProps) {
   return (
-    <BoardContainer>
-      <Link href={`board/${board.id}`}>
+    <>
+      <BoardContainer>
         <BoardHeader>
-          <BoardTitle>{board.name}</BoardTitle>
-          <NextArrowButton />
-        </BoardHeader>
-      </Link>
-      <PostList>
-        {board.posts.slice(0, 6).map((post) => (
-          <PostListContent key={post.id}>
-            <Link href={`board/${post.boardId}/post/${post.id}`}>
-              <a className="block overflow-hidden w-ful h-7 text-ellipsis">{post.title}</a>
+          <BoardTitle>{board?.name}</BoardTitle>
+          {!write ? (
+            <Link href={`/board/${board?.id}`}>
+              <a>
+                <NextArrowButton />
+              </a>
             </Link>
-          </PostListContent>
-        ))}
-      </PostList>
-    </BoardContainer>
+          ) : (
+            <WritePostButton onClick={onClick ? onClick : () => {}} />
+          )}
+        </BoardHeader>
+
+        <PostList>
+          {board?.posts.slice(0, 6).map((post) => (
+            <PostListContent key={post.id}>
+              <Link href={`/board/${post.boardId}/post/${post.id}`}>
+                <a className="block overflow-hidden w-ful h-7 text-ellipsis">{post.title}</a>
+              </Link>
+            </PostListContent>
+          ))}
+        </PostList>
+      </BoardContainer>
+    </>
   );
 }

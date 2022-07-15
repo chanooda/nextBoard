@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 // prisma 게시판 생성 (POST - Create)
 async function createBoard(req: NextApiRequest, res: NextApiResponse) {
   const body = req.body;
-  console.log(body);
+
   const boardName = await prisma.board.findUnique({
     where: {
       name: body.boardName,
@@ -42,14 +42,28 @@ async function createBoard(req: NextApiRequest, res: NextApiResponse) {
 
 // Prisma 게시판 얻기 (GET - Read)
 async function readBoard(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const boards = await prisma.board.findMany({
-      include: {
-        posts: true,
-      },
-    });
+  const id = req.query.id;
+  let boards;
 
-    return res.status(200).json({ boards, success: true });
+  try {
+    if (id) {
+      boards = await prisma.board.findMany({
+        where: {
+          id: Number(id),
+        },
+        include: {
+          posts: true,
+        },
+      });
+    } else {
+      boards = await prisma.board.findMany({
+        include: {
+          posts: true,
+        },
+      });
+    }
+
+    return res.status(200).json({ boards: boards, success: true });
   } catch (error) {
     res.status(500).json({ message: "error occurred", success: false });
   }

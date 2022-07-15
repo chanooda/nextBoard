@@ -1,10 +1,6 @@
 import { useState } from "react";
-import {
-  IBoardForm,
-  IError,
-  ISendDataState,
-  UseMutationResult,
-} from "../../interfaces/FormsInterface";
+import { IBoardForm } from "../../interfaces/FormsInterface";
+import { ISendDataState, UseMutationResult } from "../../interfaces/LibInterfaces";
 
 export const getBoards = async () => {
   const response = await fetch("http://localhost:3000/api/board");
@@ -12,6 +8,19 @@ export const getBoards = async () => {
   return data.boards;
 };
 
+export const getBoard = async (id: string) => {
+  const response = await fetch(`http://localhost:3000/api/board?id=${id}`);
+  const data = await response.json();
+  return data.boards[0];
+};
+
+export const getPost = async (id: string) => {
+  const response = await fetch(`http://localhost:3000/api/post?id=${id}`);
+  const data = await response.json();
+  return data.posts[0];
+};
+
+// POST 형식 Custom Hook
 export const useSendData = (url: string): UseMutationResult => {
   const [state, setState] = useState<ISendDataState>({
     error: undefined,
@@ -30,7 +39,10 @@ export const useSendData = (url: string): UseMutationResult => {
         redirect: "follow",
       });
       if (response.redirected) window.location.href = "/";
-      else if (response.status === 500) {
+      else if (response.status === 200) {
+        const data = await response.json();
+        window.location.href = `/board/${data.boardId}/post/${data.postId}`;
+      } else if (response.status === 500) {
         const data = await response.json();
         setState((prev) => ({ ...prev, error: data }));
       }

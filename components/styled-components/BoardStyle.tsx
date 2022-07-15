@@ -8,7 +8,7 @@ export const BoardListContainer = tw.ul`
 
 export const BoardContainer = tw.div`
     w-full
-    h-64
+    min-h-[256px]
     py-2
     px-6
     bg-white

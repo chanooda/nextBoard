@@ -23,6 +23,10 @@ export const NavBtn = tw.button`
     font-bold
 `;
 
+export const WriteBtn = tw.button`
+    
+`;
+
 export const Overlay = tw.div`
     top-0
     left-0
