@@ -4,5 +4,5 @@ export interface ButtonProps {
 
 export interface WriterButton {
   onClick: () => void;
-  isPost: boolean;
+  ispost?: boolean;
 }

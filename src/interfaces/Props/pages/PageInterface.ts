@@ -23,6 +23,7 @@ export interface IBoardProps {
   board: IBoard;
   write: boolean;
   onClick?: () => void;
+  ispost?: boolean;
 }
 
 export interface IPostProps {

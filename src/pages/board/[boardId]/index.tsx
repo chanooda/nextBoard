@@ -27,7 +27,7 @@ export default function BoardHome({ board }: IBoardProps) {
         <title>{board.name}</title>
       </Head>
       <Header back={true} title={board.name} />
-      <Board board={board} write={false} onClick={onClick} />
+      <Board board={board} write={true} ispost={false} onClick={onClick} />
       {onForm ? (
         <>
           <Overlay onClick={onOverlayClick} />

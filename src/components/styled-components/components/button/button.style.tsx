@@ -26,8 +26,8 @@ export const NavBtn = tw.button`
     font-bold
 `;
 
-export const WriteBtn = tw.button<{ isPost: boolean }>`
-    ${(p: any) => (p.isPost ? "absolute" : "static")}
+export const WriteBtn = tw.button<{ ispost?: boolean }>`
+    ${(p: any) => (p.ispost ? "static" : "absolute")}
     right-0
     top-4
 `;

@@ -33,12 +33,12 @@ export default function Post({ post }: IPostProps) {
         <div className="py-2">
           <h2 className="py-2">{post.title}</h2>
           <div className="flex justify-end gap-4 border-black border-y">
-            <WritePostButton isPost={false} onClick={onClick} />
+            <WritePostButton ispost={true} onClick={onClick} />
             <DeleteButton onClick={onDeleteClick} />
           </div>
         </div>
         <div className="pt-3 pb-6">
-          <p>{post.content}</p>
+          <pre>{post.content}</pre>
         </div>
       </div>
       {onForm ? (

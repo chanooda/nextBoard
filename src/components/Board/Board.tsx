@@ -13,7 +13,7 @@ import {
   PostListContent,
 } from "../styled-components/components/board/Board.style";
 
-export function Board({ board, write, onClick }: IBoardProps) {
+export function Board({ board, write, onClick, ispost }: IBoardProps) {
   return (
     <>
       <BoardContainer>
@@ -29,7 +29,7 @@ export function Board({ board, write, onClick }: IBoardProps) {
                 </Link>
               </>
             ) : (
-              <WritePostButton isPost={true} onClick={onClick ? onClick : () => {}} />
+              <WritePostButton ispost={ispost} onClick={onClick ? onClick : () => {}} />
             )}
           </div>
           <div className="flex justify-between py-1 border-black border-y">
