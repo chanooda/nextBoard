@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { IBoardForm } from "../../interfaces/FormInput/formInputInterface";
-import { useSendData } from "../../libs/client/boardApi";
 import { ErrorMessage } from "../Error/Error";
+import { useSendData } from "../../libs/client/hook/useData";
 
 function BoardForm() {
   const {
@@ -11,7 +11,7 @@ function BoardForm() {
     formState: { errors },
   } = useForm<IBoardForm>();
 
-  const [sendData, { loading, data, error }] = useSendData("/api/board");
+  const [sendData, { loading, data, error }] = useSendData("/api/board", "POST");
 
   const onValid: SubmitHandler<IBoardForm> = (formData) => {
     if (loading) return;

@@ -7,3 +7,7 @@ export interface IPostForm {
   content: string;
   password?: string;
 }
+
+export interface IDeleteForm {
+  password: string;
+}

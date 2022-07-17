@@ -18,11 +18,16 @@ export const BadgeButton = tw(motion.button)`
     xl:bottom-12
 `;
 export const NavBtn = tw.button`
+    absolute
+    right-0
+    bottom-1
     text-2xl
     cursor-pointer
     font-bold
 `;
 
-export const WriteBtn = tw.button`
-    
+export const WriteBtn = tw.button<{ isPost: boolean }>`
+    ${(p: any) => (p.isPost ? "absolute" : "static")}
+    right-0
+    top-4
 `;

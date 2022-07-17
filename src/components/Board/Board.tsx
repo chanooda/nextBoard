@@ -18,26 +18,41 @@ export function Board({ board, write, onClick }: IBoardProps) {
     <>
       <BoardContainer>
         <BoardHeader>
-          <BoardTitle>{board?.name}</BoardTitle>
-          {!write ? (
-            <Link href={`/board/${board?.id}`}>
-              <a>
-                <NextArrowButton />
-              </a>
-            </Link>
-          ) : (
-            <WritePostButton onClick={onClick ? onClick : () => {}} />
-          )}
+          <div className="relative flex justify-center py-2">
+            <BoardTitle>{board?.name}</BoardTitle>
+            {!write ? (
+              <>
+                <Link href={`/board/${board?.id}`}>
+                  <a>
+                    <NextArrowButton />
+                  </a>
+                </Link>
+              </>
+            ) : (
+              <WritePostButton isPost={true} onClick={onClick ? onClick : () => {}} />
+            )}
+          </div>
+          <div className="flex justify-between py-1 border-black border-y">
+            <span>제목</span>
+            <span>조회수</span>
+          </div>
         </BoardHeader>
 
         <PostList>
-          {board?.posts.slice(0, 6).map((post) => (
-            <PostListContent key={post.id}>
-              <Link href={`/board/${post.boardId}/post/${post.id}`}>
-                <a className="block overflow-hidden w-ful h-7 text-ellipsis">{post.title}</a>
+          {board?.posts.length === 0 ? (
+            <li>글이 없습니다.</li>
+          ) : (
+            board?.posts.slice(0, 6).map((post) => (
+              <Link href={`/board/${post.boardId}/post/${post.id}`} key={post.id}>
+                <a>
+                  <PostListContent>
+                    <p className="text-ellipsis">{post.title}</p>
+                    <span>{post.view}</span>
+                  </PostListContent>
+                </a>
               </Link>
-            </PostListContent>
-          ))}
+            ))
+          )}
         </PostList>
       </BoardContainer>
     </>

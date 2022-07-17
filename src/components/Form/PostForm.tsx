@@ -1,65 +1,77 @@
-import { motion } from "framer-motion";
 import { SubmitHandler, useForm } from "react-hook-form";
+// interfaces
 import { IPostForm } from "../../interfaces/FormInput/formInputInterface";
 import { IPostFormProps } from "../../interfaces/Props/Form/formPropsInterface";
-import { useSendData } from "../../libs/client/boardApi";
+// customHook
+import { useSendData } from "../../libs/client/hook/useData";
+// components
 import { ErrorMessage } from "../Error/Error";
+import {
+  FormContainer,
+  Label,
+  SubmitButton,
+  TextArea,
+  TextInput,
+  Form,
+  FormTitle,
+} from "../styled-components/components/form/input.style";
+import MotionForm from "./MotionForm";
 
-export default function PostForm({ boardId }: IPostFormProps) {
+export default function PostForm({ boardId, edit, post }: IPostFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IPostForm>();
+  } = useForm<IPostForm>({
+    defaultValues: edit
+      ? {
+          title: post?.title,
+          content: post?.content,
+        }
+      : {},
+  });
 
-  const [sendData, { loading, data, error }] = useSendData("/api/post");
+  const [sendData, { loading, data, error }] = useSendData("/api/post", edit ? "PUT" : "POST");
 
   const onValid: SubmitHandler<IPostForm> = (formData) => {
     if (loading) return;
-    const data = { ...formData, boardId };
+
+    const data = edit ? { ...formData, postId: post?.id, boardId } : { ...formData, boardId };
     sendData(data);
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.15 } }}
-      transition={{ duration: 0.1 }}
-      className="fixed z-50 w-[calc(100%_-_32px)] px-10 py-2 bg-white shadow-2xl rounded-xl max-w-[800px] top-1/2 left-1/2 transform: -translate-x-1/2 -translate-y-1/2"
-    >
-      <h2 className="mb-4 text-xl font-bold text-center">게시판 생성</h2>
-      <form onSubmit={handleSubmit(onValid)} className="flex items-center justify-start">
-        <div className="flex flex-col w-full">
-          <label htmlFor="title" className="mb-1">
-            제목
-          </label>
+    <MotionForm>
+      <FormTitle>{edit ? "게시글 수정" : "글쓰기"}</FormTitle>
+      <Form onSubmit={handleSubmit(onValid)} className="">
+        <FormContainer>
+          <Label htmlFor="title">제목</Label>
           {error ? <ErrorMessage text={error.message} /> : null}
-          <input
+          <TextInput
             {...register("title", {
               required: "제목을 입력해주세요.",
-              maxLength: { value: 15, message: "최대 15글자 입니다." },
+              maxLength: { value: 30, message: "최대 30글자 입니다." },
             })}
             type="text"
             id="title"
             className="w-full p-1 border border-black rounded-md"
           />
           {errors?.title ? <ErrorMessage text={errors?.title?.message} /> : null}
-          <label htmlFor="content" className="mb-1">
+          <Label htmlFor="content" className="mb-1">
             내용
-          </label>
-          <textarea
+          </Label>
+          <TextArea
             {...register("content", {
               required: "내용을 입력해주세요.",
             })}
             id="content"
-            className="w-full h-[400px] p-1 border border-black rounded-md resize-none"
+            className=""
           />
           {errors?.content ? <ErrorMessage text={errors?.content?.message} /> : null}
-          <label htmlFor="password" className="mb-1">
+          <Label htmlFor="password" className="mb-1">
             비밀번호
-          </label>
-          <input
+          </Label>
+          <TextInput
             {...register("password", {
               required: "비밀번호를 입력해주세요.",
               maxLength: { value: 15, message: "최대 15글자 입니다." },
@@ -69,13 +81,9 @@ export default function PostForm({ boardId }: IPostFormProps) {
             className="w-full p-1 border border-black rounded-md"
           />
           {errors?.password ? <ErrorMessage text={errors?.password?.message} /> : null}
-          <input
-            type="submit"
-            value="생성"
-            className="self-center w-24 p-1 mt-8 text-white bg-black rounded-md cursor-pointer"
-          />
-        </div>
-      </form>
-    </motion.div>
+          <SubmitButton type="submit" value={edit ? "수정" : "생성"} />
+        </FormContainer>
+      </Form>
+    </MotionForm>
   );
 }

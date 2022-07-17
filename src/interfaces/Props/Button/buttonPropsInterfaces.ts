@@ -1,7 +1,8 @@
-export interface IAddBadgeButton {
+export interface ButtonProps {
   onClick: () => void;
 }
 
-export interface IWritePostButton {
+export interface WriterButton {
   onClick: () => void;
+  isPost: boolean;
 }

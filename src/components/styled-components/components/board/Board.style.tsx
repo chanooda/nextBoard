@@ -9,18 +9,14 @@ export const BoardContainer = tw.div`
     shadow-2xl
 `;
 export const BoardHeader = tw.div`
-    pb-1
-    flex
-    justify-between
-    items-center
-    border-b
-    border-black
+   
 `;
 
 export const BoardTitle = tw.h2`
     text-lg
     font-bold
     cursor-pointer
+    text-center
 `;
 
 export const PostList = tw.ul`
@@ -30,5 +26,7 @@ export const PostList = tw.ul`
 `;
 
 export const PostListContent = tw.li`
+    flex
+    justify-between
     text-lg
 `;

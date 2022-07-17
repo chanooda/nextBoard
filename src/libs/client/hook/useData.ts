@@ -3,8 +3,8 @@ import { useState } from "react";
 import { IBoardForm } from "../../../interfaces/FormInput/formInputInterface";
 import { ISendDataState, UseMutationResult } from "../../../interfaces/hook/hookInterface";
 
-// POST 형식 Custom Hook
-export const useSendData = (url: string): UseMutationResult => {
+// POST or PUT 형식 Custom Hook
+export const useSendData = (url: string, method: string): UseMutationResult => {
   const [state, setState] = useState<ISendDataState>({
     error: undefined,
     data: undefined,
@@ -14,7 +14,7 @@ export const useSendData = (url: string): UseMutationResult => {
     try {
       setState((prev) => ({ ...prev, loading: true }));
       const response = await fetch(url, {
-        method: "POST",
+        method: method,
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
@@ -24,7 +24,11 @@ export const useSendData = (url: string): UseMutationResult => {
       if (response.redirected) window.location.href = "/";
       else if (response.status === 200) {
         const data = await response.json();
-        window.location.href = `/board/${data.boardId}/post/${data.postId}`;
+        if (data.postId) {
+          window.location.href = `/board/${data.boardId}/post/${data.postId}`;
+        } else {
+          window.location.href = `/board/${data.boardId}`;
+        }
       } else if (response.status === 500) {
         const data = await response.json();
         setState((prev) => ({ ...prev, error: data }));
