@@ -1,5 +1,5 @@
 import { NextArrowButton } from "../Button/Buttons";
-import { BoardHeader, BoardTitle } from "../styled-components/BoardStyle";
+import { BoardHeader, BoardTitle } from "../styled-components/components/board/Board.style";
 
 interface BorderHeader {
   title: string;
