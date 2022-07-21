@@ -1,6 +1,14 @@
-import { PropsWithChildren } from "react";
-import { BoardListContainer } from "../styled-components/components/board/BoardList.style";
+import { IBoard } from "../../interfaces/Props/data/dataInterface";
+import Board from "./Board";
 
-export default function BoardList({ children }: PropsWithChildren) {
-  return <BoardListContainer>{children}</BoardListContainer>;
+function BoardList({ boards }: { boards: IBoard[] }) {
+  return (
+    <div>
+      {boards.map((board) => (
+        <Board board={board} key={board.id} />
+      ))}
+    </div>
+  );
 }
+
+export default BoardList;

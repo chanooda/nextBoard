@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from "react";
-import { RegisterOptions, UseFormRegister } from "react-hook-form";
 
 function Form({
   children,
@@ -8,7 +7,11 @@ function Form({
   children: React.ReactNode[] | React.ReactNode;
   onSubmit: () => void;
 }) {
-  return <form onSubmit={onSubmit}>{children}</form>;
+  return (
+    <form onSubmit={onSubmit} className="text-black">
+      {children}
+    </form>
+  );
 }
 
 export default Form;
