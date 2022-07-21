@@ -3,14 +3,12 @@
 @tailwind utilities;
 
 html {
-  background-color: #121315;
-  color: white;
 }
 body {
   max-width: 1280px;
   margin: 0 auto;
   position: relative;
-  padding: 20px 50px;
+  padding: 20px 25px;
   padding-bottom: 112px;
 }
 ul {

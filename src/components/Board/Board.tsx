@@ -1,33 +1,21 @@
+import Link from "next/link";
 import { IBoard } from "../../interfaces/Props/data/dataInterface";
+import { NextArrowButton } from "../Button/Buttons";
+import PostList from "./PostList";
 
 function Board({ board }: { board: IBoard }) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>No</th>
-        </tr>
-        <tr>
-          <th>제목</th>
-        </tr>
-        <tr>
-          <th>조회수</th>
-        </tr>
-        <tr>
-          <th>날짜</th>
-        </tr>
-      </thead>
-      {board.posts.map((post) => {
-        return (
-          <tr key={board.id}>
-            <td>{post.id}</td>
-            <td>{post.title}</td>
-            <td>{post.view}</td>
-            <td>{post.createdAt}</td>
-          </tr>
-        );
-      })}
-    </table>
+    <div className="w-full flex justify-center flex-col p-4 shadow-2xl">
+      <div className="flex justify-between items-center py-1 ">
+        <h2 className="text-2xl text-center">{board.name}</h2>
+        <Link href={`board/${board.id}`}>
+          <a>
+            <NextArrowButton />
+          </a>
+        </Link>
+      </div>
+      <PostList posts={board.posts} />
+    </div>
   );
 }
 

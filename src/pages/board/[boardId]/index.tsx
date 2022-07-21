@@ -1,8 +1,8 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import Board from "../../../components/Board/Board";
 //Components
-import { Board } from "../../../components/Board/Board";
 import PostForm from "../../../components/Form/PostForm";
 import Header from "../../../components/layout/Header";
 import Modal from "../../../components/Modal/Modal";
@@ -24,19 +24,7 @@ export default function BoardHome({ board }: IBoardProps) {
 
   return (
     <>
-      <Head>
-        <title>{board.name}</title>
-      </Head>
-      <Header back={true} title={board.name} />
-      <Board board={board} write={true} ispost={false} onClick={onClick} />
-      {onForm ? (
-        <>
-          <Overlay onClick={onOverlayClick} />
-          <Modal>
-            <PostForm boardId={Number(board.id)} />
-          </Modal>
-        </>
-      ) : null}
+      <Board board={board} />
     </>
   );
 }

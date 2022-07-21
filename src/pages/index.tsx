@@ -2,16 +2,13 @@ import { useState } from "react";
 
 // components
 
-import BoardForm from "../components/Form/BoardForm";
 import { AddBadgeButton } from "../components/Button/Buttons";
 
-import Header from "../components/layout/Header";
 // styled-components
 import { Overlay } from "../components/styled-components/components/form/form.style";
 import { IHomeProps } from "../interfaces/Props/pages/PageInterface";
 // libs
 import { getBoards } from "../libs/client/api/getData";
-import Head from "next/head";
 import Modal from "../components/Modal/Modal";
 import BoardFormTest from "../components/Form/BoardFromTest";
 import BoardList from "../components/Board/BoardList";

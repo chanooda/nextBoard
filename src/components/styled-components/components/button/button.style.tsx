@@ -8,9 +8,9 @@ export const BadgeButton = tw(motion.button)`
     w-16
     h-16
     rounded-full
-    bg-white
+    bg-black
     text-4xl
-    text-black
+    text-white
     xl:w-20
     xl:h-20
     xl:font-bold
@@ -18,10 +18,9 @@ export const BadgeButton = tw(motion.button)`
     xl:bottom-12
 `;
 export const NavBtn = tw.button`
-    text-3xl
+    text-2xl
     cursor-pointer
     font-bold
-    text-white
 `;
 
 export const WriteBtn = tw.button`
