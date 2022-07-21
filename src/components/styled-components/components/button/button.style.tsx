@@ -8,9 +8,9 @@ export const BadgeButton = tw(motion.button)`
     w-16
     h-16
     rounded-full
-    bg-black
+    bg-white
     text-4xl
-    text-white
+    text-black
     xl:w-20
     xl:h-20
     xl:font-bold
@@ -18,16 +18,13 @@ export const BadgeButton = tw(motion.button)`
     xl:bottom-12
 `;
 export const NavBtn = tw.button`
-    absolute
-    right-0
-    bottom-1
-    text-2xl
+    text-3xl
     cursor-pointer
     font-bold
+    text-white
 `;
 
-export const WriteBtn = tw.button<{ ispost?: boolean }>`
-    ${(p: any) => (p.ispost ? "static" : "absolute")}
-    right-0
-    top-4
+export const WriteBtn = tw.button`
+    text-3xl
+    cursor-pointer
 `;

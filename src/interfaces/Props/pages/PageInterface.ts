@@ -1,21 +1,5 @@
-export interface IPost {
-  boardId: number;
-  content: string;
-  createdAt: string;
-  guest: boolean;
-  id: number;
-  password?: string;
-  title: string;
-  updatedAt: string;
-  userId?: number;
-  view: number;
-}
+import { IBoard, IPost } from "../data/dataInterface";
 
-export interface IBoard {
-  id: string;
-  name: string;
-  posts: IPost[];
-}
 export interface IHomeProps {
   boards: IBoard[];
 }

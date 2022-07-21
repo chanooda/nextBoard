@@ -1,4 +1,4 @@
-import { IPost } from "../pages/PageInterface";
+import { IPost } from "../data/dataInterface";
 
 export interface IPostFormProps {
   boardId: number;

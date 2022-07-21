@@ -1,12 +1,14 @@
 import tw from "tailwind-styled-components";
 
 export const BoardContainer = tw.div`
+  text-white
     w-full
-    min-h-[256px]
+    min-h-[400px]
     py-2
     px-6
-    bg-white
+    bg-[#242a2e]
     shadow-2xl
+    rounded-lg
 `;
 export const BoardHeader = tw.div`
    
@@ -20,7 +22,6 @@ export const BoardTitle = tw.h2`
 `;
 
 export const PostList = tw.ul`
-    mt-2
     flex
     flex-col
 `;
@@ -28,5 +29,9 @@ export const PostList = tw.ul`
 export const PostListContent = tw.li`
     flex
     justify-between
-    text-lg
+    text-base
+    text-white
+    py-1
+    border-[#5e5f61]
+    border-b
 `;

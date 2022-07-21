@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IBoardForm } from "../../../interfaces/FormInput/formInputInterface";
 import { ISendDataState, UseMutationResult } from "../../../interfaces/hook/hookInterface";
 
-// POST or PUT 형식 Custom Hook
+// Custom Hook
 export const useSendData = (url: string, method: string): UseMutationResult => {
   const [state, setState] = useState<ISendDataState>({
     error: undefined,
@@ -21,6 +21,7 @@ export const useSendData = (url: string, method: string): UseMutationResult => {
         },
         redirect: "follow",
       });
+
       if (response.redirected) window.location.href = "/";
       else if (response.status === 200) {
         const data = await response.json();

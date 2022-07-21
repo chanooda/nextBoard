@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Board } from "../../../components/Board/Board";
 import PostForm from "../../../components/Form/PostForm";
 import Header from "../../../components/layout/Header";
+import Modal from "../../../components/Modal/Modal";
 import { Overlay } from "../../../components/styled-components/components/form/form.style";
 
 //Interfaces
@@ -31,7 +32,9 @@ export default function BoardHome({ board }: IBoardProps) {
       {onForm ? (
         <>
           <Overlay onClick={onOverlayClick} />
-          <PostForm boardId={Number(board.id)} />
+          <Modal>
+            <PostForm boardId={Number(board.id)} />
+          </Modal>
         </>
       ) : null}
     </>

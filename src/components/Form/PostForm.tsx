@@ -15,7 +15,6 @@ import {
   Form,
   FormTitle,
 } from "../styled-components/components/form/input.style";
-import MotionForm from "./MotionForm";
 
 export default function PostForm({ boardId, edit, post }: IPostFormProps) {
   const {
@@ -41,7 +40,7 @@ export default function PostForm({ boardId, edit, post }: IPostFormProps) {
   };
 
   return (
-    <MotionForm>
+    <>
       <FormTitle>{edit ? "게시글 수정" : "글쓰기"}</FormTitle>
       <Form onSubmit={handleSubmit(onValid)} className="">
         <FormContainer>
@@ -50,7 +49,7 @@ export default function PostForm({ boardId, edit, post }: IPostFormProps) {
           <TextInput
             {...register("title", {
               required: "제목을 입력해주세요.",
-              maxLength: { value: 30, message: "최대 30글자 입니다." },
+              maxLength: { value: 50, message: "최대 50글자 입니다." },
             })}
             type="text"
             id="title"
@@ -84,6 +83,6 @@ export default function PostForm({ boardId, edit, post }: IPostFormProps) {
           <SubmitButton type="submit" value={edit ? "수정" : "생성"} />
         </FormContainer>
       </Form>
-    </MotionForm>
+    </>
   );
 }

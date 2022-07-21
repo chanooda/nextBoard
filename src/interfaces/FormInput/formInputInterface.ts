@@ -11,3 +11,14 @@ export interface IPostForm {
 export interface IDeleteForm {
   password: string;
 }
+
+export interface IModalForm {
+  index: number;
+  modal: boolean;
+  method: "PUT" | "DELETE";
+}
+
+export interface IWriteCommentForm {
+  content: string;
+  password: string;
+}

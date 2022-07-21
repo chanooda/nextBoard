@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
-import MotionForm from "./MotionForm";
 // interface
 import { IDeleteForm } from "../../interfaces/FormInput/formInputInterface";
 // libs
@@ -35,7 +34,7 @@ export default function DeleteForm() {
   };
 
   return (
-    <MotionForm>
+    <>
       <FormTitle>게시글 삭제</FormTitle>
       <Form onSubmit={handleSubmit(onValid)}>
         <FormContainer>
@@ -52,6 +51,6 @@ export default function DeleteForm() {
           <SubmitButton type="submit" value="삭제" />
         </FormContainer>
       </Form>
-    </MotionForm>
+    </>
   );
 }

@@ -19,13 +19,7 @@ function BoardForm() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.15 } }}
-      transition={{ duration: 0.1 }}
-      className="fixed z-50 w-[calc(100%_-_32px)] px-10 py-2 bg-white shadow-2xl rounded-xl max-w-[500px] top-1/2 left-1/2 transform: -translate-x-1/2 -translate-y-1/2"
-    >
+    <>
       <h2 className="mb-4 text-xl font-bold text-center">게시판 생성</h2>
       <form onSubmit={handleSubmit(onValid)} className="flex items-center justify-start">
         <div className="flex flex-col w-full">
@@ -50,7 +44,7 @@ function BoardForm() {
           />
         </div>
       </form>
-    </motion.div>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import { useState } from "react";
 // components
 import { DeleteButton, WritePostButton } from "../../../../components/Button/Buttons";
+import Comment from "../../../../components/Comment/Comment";
 import DeleteForm from "../../../../components/Form/DeleteForm";
 import PostForm from "../../../../components/Form/PostForm";
 import Header from "../../../../components/layout/Header";
@@ -11,6 +12,8 @@ import { Overlay } from "../../../../components/styled-components/components/for
 import { IPostProps } from "../../../../interfaces/Props/pages/PageInterface";
 // libs
 import { getPost } from "../../../../libs/client/api/getData";
+import { putView } from "../../../../libs/server/postData";
+// custom Hook
 
 export default function Post({ post }: IPostProps) {
   const [onForm, setOnForm] = useState(false);
@@ -26,6 +29,7 @@ export default function Post({ post }: IPostProps) {
   const onDeleteClick = () => {
     setOnDeleteForm(true);
   };
+
   return (
     <>
       <Header back={true} boardId={post.boardId} title={post.title} />
@@ -41,6 +45,8 @@ export default function Post({ post }: IPostProps) {
           <pre>{post.content}</pre>
         </div>
       </div>
+      <Comment post={post} />
+
       {onForm ? (
         <>
           <Overlay onClick={onOverlayClick} />
@@ -59,6 +65,9 @@ export default function Post({ post }: IPostProps) {
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { postId } = query;
 
+  // 조회수 증가
+  await putView(Number(postId));
+  // 포스트 데이터 가져오기
   const data = await getPost(Number(postId));
 
   return { props: { post: data } };
