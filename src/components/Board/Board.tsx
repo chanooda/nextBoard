@@ -1,20 +1,24 @@
 import Link from "next/link";
 import { IBoard } from "../../interfaces/Props/data/dataInterface";
-import { NextArrowButton } from "../Button/Buttons";
+import { NextArrowButton, WritePostButton } from "../Button/Buttons";
 import PostList from "./PostList";
 
-function Board({ board }: { board: IBoard }) {
+function Board({ board, main, onClick }: { board: IBoard; main?: boolean; onClick?: () => void }) {
   return (
-    <div className="w-full flex justify-center flex-col p-4 shadow-2xl">
-      <div className="flex justify-between items-center py-1 ">
+    <div className="flex flex-col justify-center w-full p-4 shadow-2xl">
+      <div className="flex items-center justify-between py-1 ">
         <h2 className="text-2xl text-center">{board.name}</h2>
-        <Link href={`board/${board.id}`}>
-          <a>
-            <NextArrowButton />
-          </a>
-        </Link>
+        {main ? (
+          <WritePostButton onClick={onClick} />
+        ) : (
+          <Link href={`board/${board.id}`}>
+            <a>
+              <NextArrowButton />
+            </a>
+          </Link>
+        )}
       </div>
-      <PostList posts={board.posts} />
+      <PostList posts={board.posts} main={main} />
     </div>
   );
 }

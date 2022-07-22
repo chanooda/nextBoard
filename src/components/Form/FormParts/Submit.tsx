@@ -1,10 +1,10 @@
 function Submit({ value }: { value: string }) {
   return (
-    <div>
+    <div className="flex justify-end">
       <input
         type="submit"
         value={value}
-        className="float-right w-24 py-1 mt-6 text-white bg-black rounded-md cursor-pointer"
+        className="w-24 py-1 text-white bg-black rounded-md cursor-pointer "
       />
     </div>
   );

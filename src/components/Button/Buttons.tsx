@@ -11,18 +11,18 @@ export function NextArrowButton() {
   return <NavBtn>{`>`}</NavBtn>;
 }
 
-export function WritePostButton({ onClick, ispost }: WriterButton) {
+export function WritePostButton({ onClick }: WriterButton) {
   return (
-    <WriteBtn onClick={onClick} ispost={ispost}>
-      +
-    </WriteBtn>
+    <button className="block text-4xl" onClick={onClick}>
+      <span>+</span>
+    </button>
   );
 }
 
 export function DeleteButton({ onClick }: ButtonProps) {
   return (
-    <button onClick={onClick} className="text-xl font-bold">
-      X
+    <button onClick={() => onClick(false, 0)} className="block text-3xl">
+      <span>x</span>
     </button>
   );
 }

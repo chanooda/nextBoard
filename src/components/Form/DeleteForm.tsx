@@ -1,56 +1,54 @@
-import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
-// interface
 import { IDeleteForm } from "../../interfaces/FormInput/formInputInterface";
-// libs
+import { IComment } from "../../interfaces/Props/data/dataInterface";
 import { useSendData } from "../../libs/client/hook/useData";
-// component
-import { ErrorMessage } from "../Error/Error";
-// styled-components
-import {
-  Form,
-  FormContainer,
-  FormTitle,
-  Label,
-  SubmitButton,
-  TextInput,
-} from "../styled-components/components/form/input.style";
+import Form from "./FormParts/Form";
+import PasswordSet from "./FormParts/PasswordSet";
+import Submit from "./FormParts/Submit";
 
-export default function DeleteForm() {
+function DeleteForm({
+  postId,
+  title,
+  comment,
+}: {
+  postId: number;
+  title?: string;
+  comment?: IComment;
+}) {
   const {
-    query: { postId },
-  } = useRouter();
-
-  const {
+    setError,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IDeleteForm>();
-  const [sendData, { loading, data, error }] = useSendData(`/api/post?id=${postId}`, "DELETE");
 
-  const onValid: SubmitHandler<IDeleteForm> = (data: object) => {
+  const url = comment ? `/api/comment` : `/api/post?id=${postId}`;
+  const [sendDate, { loading, error, data }] = useSendData(url, "DELETE");
+
+  const onValid: SubmitHandler<IDeleteForm> = (formData) => {
     if (loading) return;
-    sendData(data);
+    if (formData.password !== comment?.password)
+      setError("password", { message: "비밀번호가 틀립니다." });
+    const data = { password: formData.password, commentId: comment?.id, postId: comment?.postId };
+    sendDate(data);
   };
 
   return (
-    <>
-      <FormTitle>게시글 삭제</FormTitle>
-      <Form onSubmit={handleSubmit(onValid)}>
-        <FormContainer>
-          {error ? <ErrorMessage text={error.message} /> : null}
-          <Label>비밀번호</Label>
-          <TextInput
-            {...register("password", {
-              required: "비밀번호를 입력하세요.",
-              maxLength: { value: 15, message: "최대 15글자입니다." },
-            })}
-            type="password"
-          />
-          {errors?.password?.message ? <ErrorMessage text={errors?.password?.message} /> : null}
-          <SubmitButton type="submit" value="삭제" />
-        </FormContainer>
-      </Form>
-    </>
+    <Form error={error?.message || ""} onSubmit={handleSubmit(onValid)} title={title}>
+      <PasswordSet
+        error={errors?.password?.message || ""}
+        title="비밀번호"
+        register={register("password", {
+          required: "비밀번호를 입력해주세요.",
+          maxLength: {
+            value: 12,
+            message: "12글자가 최대입니다.",
+          },
+        })}
+      />
+      <Submit value={"삭제하기"} />
+    </Form>
   );
 }
+
+export default DeleteForm;

@@ -1,72 +1,72 @@
 import { useState } from "react";
-//interface
-import { IModalForm } from "../../interfaces/FormInput/formInputInterface";
-import { IPostProps } from "../../interfaces/Props/pages/PageInterface";
-// custom hook
+import { SubmitHandler, useForm } from "react-hook-form";
+import { IComment } from "../../interfaces/Props/data/dataInterface";
 import { useSendData } from "../../libs/client/hook/useData";
-// Component
+import { formatDateDiff } from "../../libs/client/util/util";
 import { DeleteButton, WritePostButton } from "../Button/Buttons";
-import CommentModalForm from "../Form/CommentModalForm";
-// Styled Component
+import CommentEditForm from "../Form/CommentEditForm";
+import DeleteForm from "../Form/DeleteForm";
+import Form from "../Form/FormParts/Form";
+import PasswordSet from "../Form/FormParts/PasswordSet";
+import Submit from "../Form/FormParts/Submit";
+import TextAreaSet from "../Form/FormParts/TextArea";
+import Modal from "../Modal/Modal";
 import { Overlay } from "../styled-components/components/form/form.style";
+import CommentDetail from "./CommentDetail";
 
-function CommentList({ post }: IPostProps) {
-  // fetch용 custom Hook 불러오기
-  const [sendData, { loading, error, data }] = useSendData("/api/comment", "DELETE");
+function CommentList({ comments, postId }: { comments: IComment[]; postId: number }) {
+  const [onDelete, setOnDelete] = useState({ modal: false, index: 0 });
+  const [onEdit, setOnEdit] = useState({ modal: false, index: 0 });
 
-  // modal 용 State
-  const [modalForm, setModalForm] = useState<IModalForm>({
-    index: 0,
-    modal: false,
-    method: "PUT" || "DELETE",
-  });
+  const optionedComments = comments.reverse();
+
+  const onEditClick = (modal: boolean, index: number) => {
+    setOnEdit({
+      index,
+      modal,
+    });
+  };
+
+  const onDeleteClick = (modal: boolean, index: number) => {
+    setOnDelete({
+      modal,
+      index,
+    });
+  };
 
   return (
     <>
-      <div className="w-full py-6 mt-6 bg-white">
+      <div>
         <ul>
-          {post.comments.length !== 0 ? (
-            post.comments.map((comment, index) => (
-              <li key={comment.id} className="flex justify-between">
-                <pre>{comment.content}</pre>
-                <div>
-                  <DeleteButton
-                    onClick={() => {
-                      setModalForm({
-                        index,
-                        modal: true,
-                        method: "DELETE",
-                      });
-                    }}
-                  />
-                  <WritePostButton
-                    onClick={() => {
-                      setModalForm({
-                        index,
-                        modal: true,
-                        method: "PUT",
-                      });
-                    }}
-                    ispost={true}
-                  />
+          {optionedComments.map((comment, index) => (
+            <li key={comment.id} className="flex flex-col py-2 border-b border-black">
+              {onEdit.modal ? (
+                <div className="flex flex-col items-end w-full">
+                  <DeleteButton onClick={onEditClick} />
+                  <CommentEditForm postId={comment.postId} comment={comment} />
                 </div>
-              </li>
-            ))
-          ) : (
-            <li>등록된 댓글이 없습니다.</li>
-          )}
+              ) : (
+                <CommentDetail
+                  comment={comment}
+                  index={index}
+                  onDeleteClick={onDeleteClick}
+                  onEditClick={onEditClick}
+                />
+              )}
+            </li>
+          ))}
         </ul>
       </div>
-      {modalForm.modal ? (
+      {onDelete.modal ? (
         <>
-          <CommentModalForm comment={post.comments[modalForm.index]} method={modalForm.method} />
-          <Overlay
-            onClick={() => {
-              setModalForm((prev) => {
-                return { ...prev, modal: false };
-              });
-            }}
-          />
+          <Overlay onClick={() => onDeleteClick(false, 0)} />
+          <Modal>
+            <DeleteForm
+              postId={postId}
+              comment={optionedComments[onDelete.index]}
+              title={"댓글 삭제"}
+            />
+          </Modal>
         </>
       ) : null}
     </>

@@ -1,10 +1,9 @@
 import { GetServerSideProps } from "next";
-import Head from "next/head";
 import { useState } from "react";
-import Board from "../../../components/Board/Board";
+
 //Components
-import PostForm from "../../../components/Form/PostForm";
-import Header from "../../../components/layout/Header";
+import Board from "../../../components/Board/Board";
+import PostFormTest from "../../../components/Form/PostFormTest";
 import Modal from "../../../components/Modal/Modal";
 import { Overlay } from "../../../components/styled-components/components/form/form.style";
 
@@ -18,13 +17,18 @@ export default function BoardHome({ board }: IBoardProps) {
   const onClick = () => {
     setOnForm(true);
   };
-  const onOverlayClick = () => {
-    setOnForm(false);
-  };
 
   return (
     <>
-      <Board board={board} />
+      <Board board={board} main={true} onClick={onClick} />
+      {onForm ? (
+        <>
+          <Overlay onClick={() => setOnForm(false)} />
+          <Modal>
+            <PostFormTest boardId={board.id} />
+          </Modal>
+        </>
+      ) : null}
     </>
   );
 }

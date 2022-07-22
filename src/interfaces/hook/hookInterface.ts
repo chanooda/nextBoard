@@ -1,6 +1,6 @@
 export interface ISendDataState {
   error?: IError;
-  data?: object;
+  data?: any;
   loading: boolean;
 }
 

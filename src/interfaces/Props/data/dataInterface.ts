@@ -24,7 +24,7 @@ export interface IComment {
 }
 
 export interface IBoard {
-  id: string;
+  id: number;
   name: string;
   posts: IPost[];
 }

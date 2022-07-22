@@ -1,11 +1,13 @@
 import { GetServerSideProps } from "next";
 import { useState } from "react";
-// components
 import { DeleteButton, WritePostButton } from "../../../../components/Button/Buttons";
-import Comment from "../../../../components/Comment/Comment";
+import CommentList from "../../../../components/Comment/CommentList";
+import CommentForm from "../../../../components/Form/CommendForm";
+// components
 import DeleteForm from "../../../../components/Form/DeleteForm";
-import PostForm from "../../../../components/Form/PostForm";
-import Header from "../../../../components/layout/Header";
+import PostFormTest from "../../../../components/Form/PostFormTest";
+import Modal from "../../../../components/Modal/Modal";
+import PostBoard from "../../../../components/Post/PostBoard";
 // styled-components
 import { Overlay } from "../../../../components/styled-components/components/form/form.style";
 // interface
@@ -16,46 +18,34 @@ import { putView } from "../../../../libs/server/postData";
 // custom Hook
 
 export default function Post({ post }: IPostProps) {
-  const [onForm, setOnForm] = useState(false);
   const [onDeleteForm, setOnDeleteForm] = useState(false);
-
-  const onClick = () => {
-    setOnForm(true);
-  };
-  const onOverlayClick = () => {
-    setOnForm(false);
-    setOnDeleteForm(false);
-  };
+  const [onEditForm, setOnEditForm] = useState(false);
   const onDeleteClick = () => {
     setOnDeleteForm(true);
   };
-
+  const onEditClick = () => {
+    setOnEditForm(true);
+  };
   return (
     <>
-      <Header back={true} boardId={post.boardId} title={post.title} />
-      <div className="w-full min-h-[500px] px-4 bg-white">
-        <div className="py-2">
-          <h2 className="py-2">{post.title}</h2>
-          <div className="flex justify-end gap-4 border-black border-y">
-            <WritePostButton ispost={true} onClick={onClick} />
-            <DeleteButton onClick={onDeleteClick} />
-          </div>
-        </div>
-        <div className="pt-3 pb-6">
-          <pre>{post.content}</pre>
-        </div>
-      </div>
-      <Comment post={post} />
-
-      {onForm ? (
+      <PostBoard post={post} onDeleteClick={onDeleteClick} onEditClick={onEditClick} />
+      <CommentForm postId={post.id} />
+      <CommentList comments={post.comments} postId={post.id} />
+      {onDeleteForm || onEditForm ? (
         <>
-          <Overlay onClick={onOverlayClick} />
-          <PostForm boardId={post.boardId} edit={true} post={post} />
-        </>
-      ) : onDeleteForm ? (
-        <>
-          <Overlay onClick={onOverlayClick} />
-          <DeleteForm />
+          <Overlay
+            onClick={() => {
+              setOnDeleteForm(false);
+              setOnEditForm(false);
+            }}
+          />
+          <Modal>
+            {onEditForm ? (
+              <PostFormTest boardId={post.boardId} post={post} />
+            ) : (
+              <DeleteForm postId={post.id} />
+            )}
+          </Modal>
         </>
       ) : null}
     </>

@@ -1,8 +1,7 @@
 export interface ButtonProps {
-  onClick: () => void;
+  onClick: (modal: boolean, index: number) => void;
 }
 
 export interface WriterButton {
-  onClick: () => void;
-  ispost?: boolean;
+  onClick?: () => void;
 }

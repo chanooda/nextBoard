@@ -24,7 +24,7 @@ async function createPost(req: NextApiRequest, res: NextApiResponse) {
     if (body.userId && body.password) {
       return res.status(500).json({ message: "잘못된 접근입니다.", success: false });
     }
-    //userId 가 없으면 (회원글이 아니면) quest에 true
+    //userId 가 없으면 (회원글이 아니면) guest에 true
     const newPost = await prisma.post.create({
       data: {
         title: body.title,
